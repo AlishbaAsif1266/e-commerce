@@ -3,15 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
-import { 
-    User, 
-    ShoppingBag, 
-    Heart, 
-    MapPin, 
-    Settings, 
-    LogOut, 
-    ChevronRight, 
-    Package, 
+import {
+    User,
+    ShoppingBag,
+    Heart,
+    MapPin,
+    Settings,
+    LogOut,
+    ChevronRight,
+    Package,
     CreditCard,
     ShieldCheck,
     Bell,
@@ -37,8 +37,8 @@ const Profile = () => {
 
     // Address Modal State
     const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
-    const [addressForm, setAddressForm] = useState({ 
-        name: '', street: '', city: '', state: '', zip: '', country: '', isDefault: false 
+    const [addressForm, setAddressForm] = useState({
+        name: '', street: '', city: '', state: '', zip: '', country: '', isDefault: false
     });
     const [addressErrors, setAddressErrors] = useState({});
     const [editingAddressId, setEditingAddressId] = useState(null);
@@ -56,7 +56,7 @@ const Profile = () => {
         uploadData.append('image', file);
 
         try {
-            const response = await fetch('http://localhost:5000/api/upload/image', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/upload/image`, {
                 method: 'POST',
                 body: uploadData,
             });
@@ -120,7 +120,7 @@ const Profile = () => {
         const errs = {};
         if (!profileForm.name || profileForm.name.length < 2) errs.name = 'Name is too short';
         if (!/\S+@\S+\.\S+/.test(profileForm.email)) errs.email = 'Invalid email';
-        
+
         setProfileErrors(errs);
         if (Object.keys(errs).length > 0) return;
 
@@ -144,7 +144,7 @@ const Profile = () => {
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 animate-in fade-in duration-700">
             <div className="flex flex-col lg:flex-row gap-12">
-                
+
                 {/* Sidebar Navigation */}
                 <aside className="lg:w-80 lg:shrink-0">
                     <div className="bg-white rounded-[40px] border border-gray-100 p-8 sticky top-28 shadow-xl shadow-gray-100/50 space-y-8">
@@ -169,11 +169,10 @@ const Profile = () => {
                                 <button
                                     key={item.id}
                                     onClick={() => setActiveTab(item.id)}
-                                    className={`w-full flex items-center justify-between p-4 rounded-2xl transition-all font-black text-sm uppercase tracking-widest ${
-                                        activeTab === item.id 
-                                            ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100' 
+                                    className={`w-full flex items-center justify-between p-4 rounded-2xl transition-all font-black text-sm uppercase tracking-widest ${activeTab === item.id
+                                            ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100'
                                             : 'text-gray-400 hover:text-gray-900 hover:bg-gray-50'
-                                    }`}
+                                        }`}
                                 >
                                     <div className="flex items-center">
                                         <item.icon className="h-5 w-5 mr-3" />
@@ -187,7 +186,7 @@ const Profile = () => {
                         <div className="h-[1px] bg-gray-50"></div>
 
                         {/* Sign Out */}
-                        <button 
+                        <button
                             onClick={logout}
                             className="w-full flex items-center p-4 rounded-2xl text-red-500 font-black text-sm uppercase tracking-widest hover:bg-red-50 transition-all"
                         >
@@ -216,7 +215,7 @@ const Profile = () => {
                             <div className="relative overflow-hidden bg-slate-900 rounded-[48px] p-10 md:p-14 text-white shadow-2xl">
                                 <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-600/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
                                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-violet-600/10 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2"></div>
-                                
+
                                 <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
                                     <div className="space-y-4">
                                         <div className="inline-flex items-center space-x-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/10">
@@ -271,10 +270,10 @@ const Profile = () => {
                                                 <div key={i} className="flex flex-col md:flex-row md:items-center justify-between gap-6 p-6 rounded-3xl bg-gray-50/50 hover:bg-white hover:shadow-xl transition-all border border-transparent hover:border-gray-50 group">
                                                     <div className="flex items-center space-x-6">
                                                         <div className="w-20 h-20 rounded-[28px] bg-white shadow-sm flex items-center justify-center overflow-hidden border border-gray-100 p-4">
-                                                            <img 
-                                                                src={i === 0 ? "https://images.unsplash.com/photo-1542291026-7eec264c274f?w=200" : "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=200"} 
-                                                                alt="Product" 
-                                                                className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" 
+                                                            <img
+                                                                src={i === 0 ? "https://images.unsplash.com/photo-1542291026-7eec264c274f?w=200" : "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=200"}
+                                                                alt="Product"
+                                                                className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
                                                             />
                                                         </div>
                                                         <div>
@@ -293,7 +292,7 @@ const Profile = () => {
                                                             <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Last Status</p>
                                                             <p className="text-sm font-bold text-gray-900">Out for Delivery</p>
                                                         </div>
-                                                        <button 
+                                                        <button
                                                             onClick={() => navigate('/track-order')}
                                                             className="p-4 bg-white rounded-2xl shadow-xl text-indigo-600 hover:bg-indigo-600 hover:text-white transition-all border border-gray-50"
                                                         >
@@ -321,7 +320,7 @@ const Profile = () => {
                                                     <span>Security Hub</span>
                                                     <ShieldCheck className="h-4 w-4" />
                                                 </button>
-                                                <button 
+                                                <button
                                                     onClick={() => navigate('/shop')}
                                                     className="w-full flex items-center justify-between p-5 bg-white/10 backdrop-blur-md rounded-3xl hover:bg-white text-white hover:text-indigo-600 transition-all font-black text-xs uppercase tracking-widest text-left"
                                                 >
@@ -402,9 +401,9 @@ const Profile = () => {
                                                 </button>
                                             </div>
                                         </div>
-                                        
+
                                         {addr.isDefault && <Badge variant="default" className="mb-4">Default Shipping</Badge>}
-                                        
+
                                         <div className="space-y-2">
                                             <p className="text-xl font-black text-gray-900">{addr.name}</p>
                                             <p className="text-gray-500 font-bold leading-relaxed">
@@ -413,9 +412,9 @@ const Profile = () => {
                                                 {addr.country}
                                             </p>
                                         </div>
-                                        
+
                                         {!addr.isDefault && (
-                                            <button 
+                                            <button
                                                 onClick={() => setDefaultAddress(addr.id)}
                                                 className="mt-6 text-[10px] font-black text-indigo-600 uppercase tracking-widest hover:text-indigo-700 pb-1 border-b-2 border-transparent hover:border-indigo-600 transition-all"
                                             >
@@ -424,8 +423,8 @@ const Profile = () => {
                                         )}
                                     </div>
                                 ))}
-                                
-                                <button 
+
+                                <button
                                     onClick={() => handleOpenModal()}
                                     className="bg-gray-50 p-12 rounded-[40px] border-2 border-dashed border-gray-200 flex flex-col items-center justify-center space-y-4 hover:border-indigo-600 hover:bg-white transition-all group"
                                 >
@@ -453,12 +452,12 @@ const Profile = () => {
                                             <form onSubmit={handleSaveAddress} className="space-y-6">
                                                 <div className="space-y-2">
                                                     <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest pl-1">Address Name (e.g. Home, Office)</label>
-                                                    <input 
+                                                    <input
                                                         required
                                                         value={addressForm.name}
                                                         onChange={(e) => {
                                                             const val = e.target.value;
-                                                            setAddressForm({...addressForm, name: val});
+                                                            setAddressForm({ ...addressForm, name: val });
                                                             if (addressErrors.name) setAddressErrors(prev => ({ ...prev, name: val ? '' : 'Address name is required' }));
                                                         }}
                                                         className={`w-full px-6 py-4 bg-gray-50 border ${addressErrors.name ? 'border-red-200 focus:ring-red-100' : 'border-none focus:ring-indigo-100'} rounded-2xl focus:ring-4 font-bold transition-all outline-none`}
@@ -469,12 +468,12 @@ const Profile = () => {
 
                                                 <div className="space-y-2">
                                                     <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest pl-1">Street Address</label>
-                                                    <input 
+                                                    <input
                                                         required
                                                         value={addressForm.street}
                                                         onChange={(e) => {
                                                             const val = e.target.value;
-                                                            setAddressForm({...addressForm, street: val});
+                                                            setAddressForm({ ...addressForm, street: val });
                                                             if (addressErrors.street) setAddressErrors(prev => ({ ...prev, street: val ? '' : 'Street address is required' }));
                                                         }}
                                                         className={`w-full px-6 py-4 bg-gray-50 border ${addressErrors.street ? 'border-red-200 focus:ring-red-100' : 'border-none focus:ring-indigo-100'} rounded-2xl focus:ring-4 font-bold transition-all outline-none`}
@@ -486,12 +485,12 @@ const Profile = () => {
                                                 <div className="grid grid-cols-2 gap-6">
                                                     <div className="space-y-2">
                                                         <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest pl-1">City</label>
-                                                        <input 
+                                                        <input
                                                             required
                                                             value={addressForm.city}
                                                             onChange={(e) => {
                                                                 const val = e.target.value;
-                                                                setAddressForm({...addressForm, city: val});
+                                                                setAddressForm({ ...addressForm, city: val });
                                                                 if (addressErrors.city) setAddressErrors(prev => ({ ...prev, city: val ? '' : 'City is required' }));
                                                             }}
                                                             className={`w-full px-6 py-4 bg-gray-50 border ${addressErrors.city ? 'border-red-200 focus:ring-red-100' : 'border-none focus:ring-indigo-100'} rounded-2xl focus:ring-4 font-bold transition-all outline-none`}
@@ -502,19 +501,19 @@ const Profile = () => {
                                                     <div className="space-y-2">
                                                         <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest pl-1">State / ZIP</label>
                                                         <div className="flex space-x-2">
-                                                            <input 
+                                                            <input
                                                                 required
                                                                 value={addressForm.state}
-                                                                onChange={(e) => setAddressForm({...addressForm, state: e.target.value})}
+                                                                onChange={(e) => setAddressForm({ ...addressForm, state: e.target.value })}
                                                                 className={`w-1/2 px-4 py-4 bg-gray-50 border ${addressErrors.state ? 'border-red-200 focus:ring-red-100' : 'border-none focus:ring-indigo-100'} rounded-2xl focus:ring-4 font-bold transition-all text-center outline-none`}
                                                                 placeholder="NY"
                                                             />
-                                                            <input 
+                                                            <input
                                                                 required
                                                                 value={addressForm.zip}
                                                                 onChange={(e) => {
                                                                     const val = e.target.value;
-                                                                    setAddressForm({...addressForm, zip: val});
+                                                                    setAddressForm({ ...addressForm, zip: val });
                                                                     if (addressErrors.zip) setAddressErrors(prev => ({ ...prev, zip: /^\d{5}(-\d{4})?$/.test(val) ? '' : 'Invalid ZIP' }));
                                                                 }}
                                                                 className={`w-1/2 px-4 py-4 bg-gray-50 border ${addressErrors.zip ? 'border-red-200 focus:ring-red-100' : 'border-none focus:ring-indigo-100'} rounded-2xl focus:ring-4 font-bold transition-all text-center outline-none`}
@@ -530,10 +529,10 @@ const Profile = () => {
                                                 </div>
 
                                                 <div className="flex items-center space-x-3 p-2">
-                                                    <input 
+                                                    <input
                                                         type="checkbox"
                                                         checked={addressForm.isDefault}
-                                                        onChange={(e) => setAddressForm({...addressForm, isDefault: e.target.checked})}
+                                                        onChange={(e) => setAddressForm({ ...addressForm, isDefault: e.target.checked })}
                                                         className="w-5 h-5 rounded-lg border-gray-200 text-indigo-600 focus:ring-indigo-100"
                                                     />
                                                     <span className="text-sm font-bold text-gray-600">Set as default shipping address</span>
@@ -558,29 +557,29 @@ const Profile = () => {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     <div className="space-y-3">
                                         <label className="text-xs font-black text-gray-400 uppercase tracking-widest pl-1">Full Name</label>
-                                        <input 
-                                            type="text" 
-                                            value={profileForm.name} 
+                                        <input
+                                            type="text"
+                                            value={profileForm.name}
                                             onChange={(e) => {
                                                 const val = e.target.value;
-                                                setProfileForm({...profileForm, name: val});
+                                                setProfileForm({ ...profileForm, name: val });
                                                 if (profileErrors.name) setProfileErrors(prev => ({ ...prev, name: val.length >= 2 ? '' : 'Name is too short' }));
                                             }}
-                                            className={`w-full px-6 py-4 bg-gray-50 border ${profileErrors.name ? 'border-red-200' : 'border-none'} rounded-2xl focus:ring-2 focus:ring-indigo-100 text-gray-900 font-bold outline-none`} 
+                                            className={`w-full px-6 py-4 bg-gray-50 border ${profileErrors.name ? 'border-red-200' : 'border-none'} rounded-2xl focus:ring-2 focus:ring-indigo-100 text-gray-900 font-bold outline-none`}
                                         />
                                         {profileErrors.name && <p className="text-[10px] font-bold text-red-500 ml-2">{profileErrors.name}</p>}
                                     </div>
                                     <div className="space-y-3">
                                         <label className="text-xs font-black text-gray-400 uppercase tracking-widest pl-1">Email Address</label>
-                                        <input 
-                                            type="email" 
-                                            value={profileForm.email} 
+                                        <input
+                                            type="email"
+                                            value={profileForm.email}
                                             onChange={(e) => {
                                                 const val = e.target.value;
-                                                setProfileForm({...profileForm, email: val});
+                                                setProfileForm({ ...profileForm, email: val });
                                                 if (profileErrors.email) setProfileErrors(prev => ({ ...prev, email: /\S+@\S+\.\S+/.test(val) ? '' : 'Invalid email' }));
                                             }}
-                                            className={`w-full px-6 py-4 bg-gray-50 border ${profileErrors.email ? 'border-red-200' : 'border-none'} rounded-2xl focus:ring-2 focus:ring-indigo-100 text-gray-900 font-bold outline-none`} 
+                                            className={`w-full px-6 py-4 bg-gray-50 border ${profileErrors.email ? 'border-red-200' : 'border-none'} rounded-2xl focus:ring-2 focus:ring-indigo-100 text-gray-900 font-bold outline-none`}
                                         />
                                         {profileErrors.email && <p className="text-[10px] font-bold text-red-500 ml-2">{profileErrors.email}</p>}
                                     </div>
@@ -608,7 +607,7 @@ const Profile = () => {
                                             <div className="absolute right-1 top-1 w-4 h-4 bg-white rounded-full"></div>
                                         </div>
                                     </div>
-                                    
+
                                     <div className="flex items-center justify-between p-6 bg-gray-50 rounded-3xl">
                                         <div className="flex items-center space-x-4">
                                             <div className="h-10 w-10 bg-white rounded-xl shadow-sm flex items-center justify-center text-indigo-600">

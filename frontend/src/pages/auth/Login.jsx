@@ -39,7 +39,7 @@ const Login = () => {
         setFieldErrors(prev => ({ ...prev, password: validatePassword(value) }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
 
@@ -51,15 +51,15 @@ const Login = () => {
             return;
         }
 
-        if (email === 'admin@smartcart.com' && password === 'admin123') {
-            login({ name: 'Admin User', email: 'admin@smartcart.com', role: 'admin' });
-            navigate('/admin');
-        } else if (email && password) {
-            // Simulated login
-            login({ name: 'Jane Doe', email: email, role: 'user' });
-            navigate(from, { replace: true });
-        } else {
-            setError('Please enter valid credentials');
+        try {
+            const user = await login(email, password);
+            if (user.role === 'admin') {
+                navigate('/admin');
+            } else {
+                navigate(from, { replace: true });
+            }
+        } catch (err) {
+            setError(err.message || 'Failed to login');
         }
     };
 

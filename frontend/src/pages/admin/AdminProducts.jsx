@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { 
-    Search, 
-    Plus, 
-    Filter, 
-    MoreVertical, 
-    Edit, 
-    Trash2, 
-    ChevronLeft, 
+import {
+    Search,
+    Plus,
+    Filter,
+    MoreVertical,
+    Edit,
+    Trash2,
+    ChevronLeft,
     ChevronRight,
     ArrowUpDown,
     Package,
@@ -21,62 +21,62 @@ import Badge from '../../components/ui/Badge';
 
 // Mock Product Data for Admin
 const initialProducts = [
-    { 
-        id: 1, 
-        name: 'Velocity Tech Tee', 
-        category: 'Apparel', 
-        price: 45.00, 
-        stock: 124, 
-        status: 'In Stock', 
-        sku: 'AP-VLT-001', 
+    {
+        id: 1,
+        name: 'Velocity Tech Tee',
+        category: 'Apparel',
+        price: 45.00,
+        stock: 124,
+        status: 'In Stock',
+        sku: 'AP-VLT-001',
         image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=800',
         description: 'Engineered for maximum performance and breathability.',
         tags: 'Best Seller'
     },
-    { 
-        id: 2, 
-        name: 'Classic Urban Blazer', 
-        category: 'Apparel', 
-        price: 158.00, 
-        stock: 42, 
-        status: 'In Stock', 
-        sku: 'AP-CUB-002', 
+    {
+        id: 2,
+        name: 'Classic Urban Blazer',
+        category: 'Apparel',
+        price: 158.00,
+        stock: 42,
+        status: 'In Stock',
+        sku: 'AP-CUB-002',
         image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=800',
         description: 'A timeless silhouette for the modern city explorer.',
         tags: 'New Arrival'
     },
-    { 
-        id: 3, 
-        name: 'Sprint Runner X', 
-        category: 'Shoes', 
-        price: 85.00, 
-        stock: 8, 
-        status: 'Low Stock', 
-        sku: 'SH-SRX-003', 
+    {
+        id: 3,
+        name: 'Sprint Runner X',
+        category: 'Shoes',
+        price: 85.00,
+        stock: 8,
+        status: 'Low Stock',
+        sku: 'SH-SRX-003',
         image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=800',
         description: 'Responsive cushioning meets aerodynamic design.',
         tags: 'Discounted'
     },
-    { 
-        id: 4, 
-        name: 'Sonic Buds Ultra', 
-        category: 'Tech', 
-        price: 249.00, 
-        stock: 0, 
-        status: 'Out of Stock', 
-        sku: 'TE-SBU-004', 
+    {
+        id: 4,
+        name: 'Sonic Buds Ultra',
+        category: 'Tech',
+        price: 249.00,
+        stock: 0,
+        status: 'Out of Stock',
+        sku: 'TE-SBU-004',
         image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=800',
         description: 'Immersive noise cancellation for pure audio bliss.',
         tags: 'Limited Edition'
     },
-    { 
-        id: 5, 
-        name: 'Elite Urban Backpack', 
-        category: 'Accessories', 
-        price: 124.00, 
-        stock: 56, 
-        status: 'In Stock', 
-        sku: 'AC-EUB-005', 
+    {
+        id: 5,
+        name: 'Elite Urban Backpack',
+        category: 'Accessories',
+        price: 124.00,
+        stock: 56,
+        status: 'In Stock',
+        sku: 'AC-EUB-005',
         image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&q=80&w=800',
         description: 'Weatherproof exterior with smart organization compartments.',
         tags: 'New Arrival'
@@ -88,20 +88,20 @@ const AdminProducts = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingProduct, setEditingProduct] = useState(null);
-    const [formData, setFormData] = useState({ 
-        name: '', 
-        category: 'Apparel', 
-        price: '', 
-        stock: '', 
-        sku: '', 
+    const [formData, setFormData] = useState({
+        name: '',
+        category: 'Apparel',
+        price: '',
+        stock: '',
+        sku: '',
         image: '',
         description: '',
         tags: 'New Arrival'
     });
     const [isUploading, setIsUploading] = useState(false);
 
-    const filteredProducts = products.filter(p => 
-        p.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    const filteredProducts = products.filter(p =>
+        p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         p.sku.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
@@ -111,12 +111,12 @@ const AdminProducts = () => {
             setFormData({ ...product });
         } else {
             setEditingProduct(null);
-            setFormData({ 
-                name: '', 
-                category: 'Apparel', 
-                price: '', 
-                stock: '', 
-                sku: `SKU-${Math.floor(Math.random() * 10000)}`, 
+            setFormData({
+                name: '',
+                category: 'Apparel',
+                price: '',
+                stock: '',
+                sku: `SKU-${Math.floor(Math.random() * 10000)}`,
                 image: '',
                 description: '',
                 tags: 'New Arrival'
@@ -134,7 +134,7 @@ const AdminProducts = () => {
         uploadData.append('image', file);
 
         try {
-            const response = await fetch('http://localhost:5000/api/upload/image', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/upload/image`, {
                 method: 'POST',
                 body: uploadData,
             });
@@ -185,8 +185,8 @@ const AdminProducts = () => {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white p-6 rounded-[32px] border border-slate-200 shadow-sm">
                 <div className="relative flex-1 max-w-md">
                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
-                    <input 
-                        type="text" 
+                    <input
+                        type="text"
                         placeholder="Search by name or SKU..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
@@ -197,9 +197,9 @@ const AdminProducts = () => {
                     <button className="p-4 bg-slate-50 rounded-2xl text-slate-600 hover:bg-slate-100 transition-all">
                         <Filter className="h-5 w-5" />
                     </button>
-                    <Button 
-                        variant="primary" 
-                        className="rounded-2xl px-6 py-4 shadow-xl shadow-indigo-100" 
+                    <Button
+                        variant="primary"
+                        className="rounded-2xl px-6 py-4 shadow-xl shadow-indigo-100"
                         leftIcon={<Plus className="h-5 w-5" />}
                         onClick={() => handleOpenModal()}
                     >
@@ -258,32 +258,30 @@ const AdminProducts = () => {
                                         <div className="flex flex-col space-y-1">
                                             <span className="text-sm font-bold text-slate-900">{product.stock} Units</span>
                                             <div className="w-24 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                                                <div 
-                                                    className={`h-full transition-all duration-1000 ${
-                                                        product.stock === 0 ? 'bg-red-500 w-0' : 
-                                                        product.stock < 20 ? 'bg-amber-500 w-1/4' : 'bg-emerald-500 w-2/3'
-                                                    }`}
+                                                <div
+                                                    className={`h-full transition-all duration-1000 ${product.stock === 0 ? 'bg-red-500 w-0' :
+                                                            product.stock < 20 ? 'bg-amber-500 w-1/4' : 'bg-emerald-500 w-2/3'
+                                                        }`}
                                                 ></div>
                                             </div>
                                         </div>
                                     </td>
                                     <td className="px-8 py-6">
-                                        <div className={`inline-flex items-center px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest ${
-                                            product.status === 'In Stock' ? 'bg-emerald-50 text-emerald-600' :
-                                            product.status === 'Low Stock' ? 'bg-amber-50 text-amber-600' : 'bg-red-50 text-red-600'
-                                        }`}>
+                                        <div className={`inline-flex items-center px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest ${product.status === 'In Stock' ? 'bg-emerald-50 text-emerald-600' :
+                                                product.status === 'Low Stock' ? 'bg-amber-50 text-amber-600' : 'bg-red-50 text-red-600'
+                                            }`}>
                                             {product.status}
                                         </div>
                                     </td>
                                     <td className="px-8 py-6 text-right">
                                         <div className="flex items-center justify-end space-x-2">
-                                            <button 
+                                            <button
                                                 className="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all"
                                                 onClick={() => handleOpenModal(product)}
                                             >
                                                 <Edit className="h-4 w-4" />
                                             </button>
-                                            <button 
+                                            <button
                                                 className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
                                                 onClick={() => handleDelete(product.id)}
                                             >
@@ -355,10 +353,10 @@ const AdminProducts = () => {
             {/* Product Modal */}
             {isModalOpen && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-                <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300" onClick={() => setIsModalOpen(false)}></div>
-                <div className="bg-white rounded-[40px] w-full max-w-4xl max-h-[90vh] relative z-10 shadow-2xl border border-white animate-in zoom-in duration-300 overflow-hidden flex flex-col">
-                    {/* Fixed Header */}
-                    <div className="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50/50 shrink-0">
+                    <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300" onClick={() => setIsModalOpen(false)}></div>
+                    <div className="bg-white rounded-[40px] w-full max-w-4xl max-h-[90vh] relative z-10 shadow-2xl border border-white animate-in zoom-in duration-300 overflow-hidden flex flex-col">
+                        {/* Fixed Header */}
+                        <div className="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50/50 shrink-0">
                             <div>
                                 <h3 className="text-2xl font-black text-slate-900 tracking-tight">
                                     {editingProduct ? 'Edit Product' : 'Add New Product'}
@@ -378,10 +376,9 @@ const AdminProducts = () => {
                                     <div className="space-y-6">
                                         <div className="space-y-2">
                                             <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Product Media</label>
-                                            <div 
-                                                className={`relative group h-64 rounded-[32px] border-2 border-dashed transition-all flex flex-col items-center justify-center overflow-hidden cursor-pointer ${
-                                                    formData.image ? 'border-indigo-100 bg-indigo-50/30' : 'border-slate-200 bg-slate-50 hover:border-indigo-300'
-                                                }`}
+                                            <div
+                                                className={`relative group h-64 rounded-[32px] border-2 border-dashed transition-all flex flex-col items-center justify-center overflow-hidden cursor-pointer ${formData.image ? 'border-indigo-100 bg-indigo-50/30' : 'border-slate-200 bg-slate-50 hover:border-indigo-300'
+                                                    }`}
                                             >
                                                 {isUploading ? (
                                                     <div className="flex flex-col items-center space-y-3">
@@ -405,8 +402,8 @@ const AdminProducts = () => {
                                                         <p className="text-xs font-black uppercase tracking-widest text-center px-4">Drag and drop or click to upload</p>
                                                     </div>
                                                 )}
-                                                <input 
-                                                    type="file" 
+                                                <input
+                                                    type="file"
                                                     accept="image/*"
                                                     onChange={handleImageUpload}
                                                     className="absolute inset-0 opacity-0 cursor-pointer"
@@ -417,7 +414,7 @@ const AdminProducts = () => {
 
                                         <div className="space-y-2">
                                             <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Product Description</label>
-                                            <textarea 
+                                            <textarea
                                                 rows="4"
                                                 value={formData.description}
                                                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -431,8 +428,8 @@ const AdminProducts = () => {
                                     <div className="space-y-6">
                                         <div className="space-y-2">
                                             <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Product Name</label>
-                                            <input 
-                                                type="text" 
+                                            <input
+                                                type="text"
                                                 required
                                                 value={formData.name}
                                                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -444,7 +441,7 @@ const AdminProducts = () => {
                                         <div className="grid grid-cols-2 gap-4">
                                             <div className="space-y-2">
                                                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Category</label>
-                                                <select 
+                                                <select
                                                     value={formData.category}
                                                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                                                     className="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-indigo-100 font-bold transition-all outline-none appearance-none cursor-pointer"
@@ -457,8 +454,8 @@ const AdminProducts = () => {
                                             </div>
                                             <div className="space-y-2">
                                                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Price ($)</label>
-                                                <input 
-                                                    type="number" 
+                                                <input
+                                                    type="number"
                                                     step="0.01"
                                                     required
                                                     value={formData.price}
@@ -472,8 +469,8 @@ const AdminProducts = () => {
                                         <div className="grid grid-cols-2 gap-4">
                                             <div className="space-y-2">
                                                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Stock Status</label>
-                                                <input 
-                                                    type="number" 
+                                                <input
+                                                    type="number"
                                                     required
                                                     value={formData.stock}
                                                     onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
@@ -483,7 +480,7 @@ const AdminProducts = () => {
                                             </div>
                                             <div className="space-y-2">
                                                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Badge / Tag</label>
-                                                <select 
+                                                <select
                                                     value={formData.tags}
                                                     onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
                                                     className="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-indigo-100 font-bold transition-all outline-none appearance-none cursor-pointer"
@@ -495,7 +492,7 @@ const AdminProducts = () => {
                                                 </select>
                                             </div>
                                         </div>
-                                        
+
                                         <div className="space-y-2">
                                             <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Inventory SKU</label>
                                             <div className="px-6 py-4 bg-slate-100 rounded-2xl text-slate-400 font-mono text-sm border border-slate-200">

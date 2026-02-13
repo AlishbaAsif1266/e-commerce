@@ -21,7 +21,7 @@ const SignUp = () => {
         agreeTerms: ''
     });
 
-    const { login } = useAuth();
+    const { register } = useAuth();
     const navigate = useNavigate();
 
     const validateName = (val) => {
@@ -67,9 +67,9 @@ const SignUp = () => {
                 error = validatePassword(value);
                 // Also re-validate confirm password if it's already filled
                 if (confirmPassword) {
-                    setFieldErrors(prev => ({ 
-                        ...prev, 
-                        confirmPassword: validateConfirmPassword(confirmPassword, value) 
+                    setFieldErrors(prev => ({
+                        ...prev,
+                        confirmPassword: validateConfirmPassword(confirmPassword, value)
                     }));
                 }
                 break;
@@ -83,7 +83,7 @@ const SignUp = () => {
         setFieldErrors(prev => ({ ...prev, [field]: error }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
 
@@ -102,8 +102,12 @@ const SignUp = () => {
             return;
         }
 
-        login({ name, email, role: 'user' });
-        navigate('/');
+        try {
+            await register(name, email, password);
+            navigate('/');
+        } catch (err) {
+            setError(err.message || 'Failed to register');
+        }
     };
 
     return (
@@ -117,7 +121,7 @@ const SignUp = () => {
             <div className="w-full max-w-[640px] relative z-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
                 {/* Header Section */}
                 <div className="text-center mb-10">
-                    <button 
+                    <button
                         onClick={() => navigate('/login')}
                         className="inline-flex items-center space-x-2 text-gray-400 hover:text-indigo-600 transition-colors mb-6 group"
                     >
@@ -236,8 +240,8 @@ const SignUp = () => {
                         <div className="pt-2 px-1">
                             <label className="flex items-start space-x-3 cursor-pointer group">
                                 <div className="relative flex items-center justify-center mt-1">
-                                    <input 
-                                        type="checkbox" 
+                                    <input
+                                        type="checkbox"
                                         checked={agreeTerms}
                                         onChange={(e) => setAgreeTerms(e.target.checked)}
                                         className="h-5 w-5 appearance-none bg-gray-50 border border-gray-200 rounded focus:ring-indigo-600 checked:bg-indigo-600 checked:border-indigo-600 transition-all cursor-pointer"
